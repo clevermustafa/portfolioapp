@@ -140,7 +140,8 @@ class _InformationPageState extends State<InformationPage> {
                     _aboutYourselfController.text == "" ||
                     _nameController.text == "" ||
                     _skillsController.text == "") {
-                      
+                      final snackBar = SnackBar(content: Text("Please fill the form."));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 } else {
                   Navigator.push(
                     context,
