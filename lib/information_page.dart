@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:portfolioapp/display_info_page.dart';
 
 class InformationPage extends StatefulWidget {
   const InformationPage({super.key});
@@ -13,18 +14,21 @@ class InformationPage extends StatefulWidget {
 class _InformationPageState extends State<InformationPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _aboutYourselfController = TextEditingController();
+  final TextEditingController _aboutYourselfController =
+      TextEditingController();
   final TextEditingController _skillsController = TextEditingController();
 
   final ImagePicker picker = ImagePicker();
   XFile? file;
-  getImageFromGallery() async{
-    file=  await picker.pickImage(source: ImageSource.gallery);
+  getImageFromGallery() async {
+    file = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {});
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text("Fill up your details"),
       ),
@@ -38,13 +42,17 @@ class _InformationPageState extends State<InformationPage> {
                 getImageFromGallery();
               },
               child: Container(
+                clipBehavior: Clip.hardEdge,
                 height: 100,
                 width: 100,
                 decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.grey
-                ),
-                child: file == null ? SizedBox() : Image.file(File(file!.path))
+                    shape: BoxShape.circle, color: Colors.grey),
+                child: file == null
+                    ? const SizedBox()
+                    : Image.file(
+                        File(file!.path),
+                        fit: BoxFit.cover,
+                      ),
               ),
             ),
             const SizedBox(
@@ -127,10 +135,29 @@ class _InformationPageState extends State<InformationPage> {
               height: 20,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                if (_emailController.text == "" ||
+                    _aboutYourselfController.text == "" ||
+                    _nameController.text == "" ||
+                    _skillsController.text == "") {
+                      
+                } else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DisplayInfoPage(
+                        name: _nameController.text,
+                        email: _emailController.text,
+                        aboutYourSelf: _aboutYourselfController.text,
+                        skills: _skillsController.text,
+                      ),
+                    ),
+                  );
+                }
+              },
               style: ButtonStyle(
-                minimumSize: MaterialStateProperty.all(const Size(double.infinity, 50))
-              ),
+                  minimumSize: MaterialStateProperty.all(
+                      const Size(double.infinity, 50))),
               child: const Text("Submit"),
             )
           ],
