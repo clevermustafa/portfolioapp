@@ -1,20 +1,41 @@
 import 'package:flutter/material.dart';
 
-class InformationPage extends StatelessWidget {
+class InformationPage extends StatefulWidget {
   const InformationPage({super.key});
 
+  @override
+  State<InformationPage> createState() => _InformationPageState();
+}
+
+class _InformationPageState extends State<InformationPage> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _aboutYourselfController = TextEditingController();
+  final TextEditingController _skillsController = TextEditingController();
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Fill up your details"),
+        title: const Text("Fill up your details"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            Container(
+              height: 100,
+              width: 100,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.grey
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            const Text(
               "Enter your name",
               style: TextStyle(
                 fontSize: 16,
@@ -25,14 +46,15 @@ class InformationPage extends StatelessWidget {
               height: 20,
             ),
             TextField(
-              decoration: InputDecoration(
+              controller: _nameController,
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(),
               ),
             ),
             const SizedBox(
               height: 20,
             ),
-            Text(
+            const Text(
               "Enter your email",
               style: TextStyle(
                 fontSize: 16,
@@ -43,14 +65,15 @@ class InformationPage extends StatelessWidget {
               height: 20,
             ),
             TextField(
-              decoration: InputDecoration(
+              controller: _emailController,
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(),
               ),
             ),
             const SizedBox(
               height: 20,
             ),
-            Text(
+            const Text(
               "About yourself",
               style: TextStyle(
                 fontSize: 16,
@@ -61,14 +84,15 @@ class InformationPage extends StatelessWidget {
               height: 20,
             ),
             TextField(
-              decoration: InputDecoration(
+              controller: _aboutYourselfController,
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(),
               ),
             ),
             const SizedBox(
               height: 20,
             ),
-            Text(
+            const Text(
               "Skills",
               style: TextStyle(
                 fontSize: 16,
@@ -79,7 +103,8 @@ class InformationPage extends StatelessWidget {
               height: 20,
             ),
             TextField(
-              decoration: InputDecoration(
+              controller: _skillsController,
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(),
               ),
             ),
@@ -89,7 +114,7 @@ class InformationPage extends StatelessWidget {
             ElevatedButton(
               onPressed: () {},
               style: ButtonStyle(
-                minimumSize: MaterialStateProperty.all(Size(double.infinity, 50))
+                minimumSize: MaterialStateProperty.all(const Size(double.infinity, 50))
               ),
               child: const Text("Submit"),
             )
