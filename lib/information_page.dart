@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class InformationPage extends StatefulWidget {
   const InformationPage({super.key});
@@ -12,6 +15,12 @@ class _InformationPageState extends State<InformationPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _aboutYourselfController = TextEditingController();
   final TextEditingController _skillsController = TextEditingController();
+
+  final ImagePicker picker = ImagePicker();
+  XFile? file;
+  getImageFromGallery() async{
+    file=  await picker.pickImage(source: ImageSource.gallery);
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -24,15 +33,21 @@ class _InformationPageState extends State<InformationPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              height: 100,
-              width: 100,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.grey
+            InkWell(
+              onTap: () {
+                getImageFromGallery();
+              },
+              child: Container(
+                height: 100,
+                width: 100,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.grey
+                ),
+                child: file == null ? SizedBox() : Image.file(File(file!.path))
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             const Text(
