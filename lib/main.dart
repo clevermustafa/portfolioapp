@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portfolioapp/information_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,6 +21,20 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Portfolio App"),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            // push to next page
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const InformationPage()));
+          },
+          child: Text("Get Started"),
+        ),
+      ),
+    );
   }
 }
+
