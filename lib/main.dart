@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:portfolioapp/display_info_page.dart';
 import 'package:portfolioapp/information_page.dart';
+import 'package:portfolioapp/utils/local_data_source.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,8 +14,40 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomePage(),
+    return  MaterialApp(
+      home: Navigation()
+    );
+  }
+}
+
+class Navigation extends StatelessWidget {
+  final LocalDataSource localDataSource = LocalDataSource();
+
+  Navigation({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: localDataSource.getInformation(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final result = snapshot.data;
+          print("result: $result");
+          if (result != "") {
+            Map<String, dynamic> decodedData = jsonDecode(result!);
+            return DisplayInfoPage(
+              name: decodedData['name'],
+              email: decodedData['email'],
+              aboutYourSelf: decodedData['about'],
+              skills: decodedData['skills'],
+              imagePath: decodedData['imagePath'],
+            );
+          } else {
+            return const HomePage();
+          }
+        }
+        return Container();
+      },
     );
   }
 }
@@ -29,7 +65,8 @@ class HomePage extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () {
             // push to next page
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const InformationPage()));
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const InformationPage()));
           },
           child: Text("Get Started"),
         ),
@@ -37,4 +74,3 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-
