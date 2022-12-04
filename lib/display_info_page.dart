@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:portfolioapp/main.dart';
+import 'package:portfolioapp/utils/local_data_source.dart';
 
 class DisplayInfoPage extends StatelessWidget {
   final String name;
@@ -21,6 +23,20 @@ class DisplayInfoPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("My Portfolio"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                LocalDataSource.clearInformation().then(
+                  (value) => Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const HomePage(),
+                      ),
+                      (route) => false),
+                );
+              },
+              icon: const Icon(Icons.logout))
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -37,7 +53,10 @@ class DisplayInfoPage extends StatelessWidget {
                     shape: BoxShape.circle,
                     color: Colors.grey,
                   ),
-                  child: Image.file(File(imagePath), fit: BoxFit.cover,),
+                  child: Image.file(
+                    File(imagePath),
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 const SizedBox(
                   width: 20,

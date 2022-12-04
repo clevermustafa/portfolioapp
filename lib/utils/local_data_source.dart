@@ -9,4 +9,8 @@ class LocalDataSource {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     return sharedPreferences.getString("PersonalInfo") ?? "";
   }
+  static Future clearInformation() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.clear();
+  }
 }
