@@ -151,6 +151,7 @@ class _InformationPageState extends State<InformationPage> {
                         email: _emailController.text,
                         aboutYourSelf: _aboutYourselfController.text,
                         skills: _skillsController.text,
+                        imagePath: file!.path,
                       ),
                     ),
                   );

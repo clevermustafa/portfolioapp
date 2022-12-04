@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -7,11 +9,14 @@ class DisplayInfoPage extends StatelessWidget {
   final String email;
   final String aboutYourSelf;
   final String skills;
-  const DisplayInfoPage(
-      {required this.name,
-      required this.email,
-      required this.aboutYourSelf,
-      required this.skills});
+  final String imagePath;
+  const DisplayInfoPage({
+    required this.name,
+    required this.email,
+    required this.aboutYourSelf,
+    required this.skills,
+    required this.imagePath,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +35,10 @@ class DisplayInfoPage extends StatelessWidget {
                   height: 100,
                   width: 100,
                   decoration: const BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.grey),
+                    shape: BoxShape.circle,
+                    color: Colors.grey,
+                  ),
+                  child: Image.file(File(imagePath)),
                 ),
                 const SizedBox(
                   width: 20,
