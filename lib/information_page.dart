@@ -1,8 +1,10 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:portfolioapp/display_info_page.dart';
+import 'package:portfolioapp/utils/local_data_source.dart';
 
 class InformationPage extends StatefulWidget {
   const InformationPage({super.key});
@@ -19,6 +21,7 @@ class _InformationPageState extends State<InformationPage> {
   final TextEditingController _skillsController = TextEditingController();
 
   final ImagePicker picker = ImagePicker();
+  final LocalDataSource localDataSource = LocalDataSource();
   XFile? file;
   getImageFromGallery() async {
     file = await picker.pickImage(source: ImageSource.gallery);
@@ -145,6 +148,15 @@ class _InformationPageState extends State<InformationPage> {
                       SnackBar(content: Text("Please fill the form."));
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 } else {
+                  Map<String, dynamic> data = {
+                    "name": _nameController.text,
+                    "email": _emailController.text,
+                    "skills": _skillsController.text,
+                    "about": _aboutYourselfController.text,
+                    "imagePath": file!.path,
+                  };
+                  final encodedData = jsonEncode(data);
+                  localDataSource.storeInformation(encodedData);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
