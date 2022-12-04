@@ -1,8 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class DisplayInfoPage extends StatelessWidget {
   final String name;
@@ -32,13 +30,14 @@ class DisplayInfoPage extends StatelessWidget {
             Row(
               children: [
                 Container(
+                  clipBehavior: Clip.hardEdge,
                   height: 100,
                   width: 100,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.grey,
                   ),
-                  child: Image.file(File(imagePath)),
+                  child: Image.file(File(imagePath), fit: BoxFit.cover,),
                 ),
                 const SizedBox(
                   width: 20,

@@ -139,9 +139,11 @@ class _InformationPageState extends State<InformationPage> {
                 if (_emailController.text == "" ||
                     _aboutYourselfController.text == "" ||
                     _nameController.text == "" ||
-                    _skillsController.text == "") {
-                      final snackBar = SnackBar(content: Text("Please fill the form."));
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    _skillsController.text == "" ||
+                    file == null) {
+                  final snackBar =
+                      SnackBar(content: Text("Please fill the form."));
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 } else {
                   Navigator.push(
                     context,
